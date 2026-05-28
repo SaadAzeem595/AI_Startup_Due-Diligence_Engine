@@ -4,3 +4,4 @@ Starting tracking of project history...
 - 2026-05-28T14:14:15: feat: add database models and configuration schema
 - 2026-05-28T16:56:32: feat: implement FastAPI core engine and endpoints
 - 2026-05-28T17:15:42: feat: initial project structure setup
+- 2026-05-28T18:24:08: feat: create Next.js application workspace
