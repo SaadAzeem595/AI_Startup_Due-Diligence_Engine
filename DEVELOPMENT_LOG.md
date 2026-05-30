@@ -12,3 +12,4 @@ Starting tracking of project history...
 - 2026-05-30T12:30:49: feat: add offline mock fallbacks for client-side queries
 - 2026-05-30T13:31:01: feat: integrate startup card overview grid with active state indicators
 - 2026-05-30T18:07:14: feat: implement startup document upload flow with API connection
+- 2026-05-30T21:12:27: feat: create due diligence portfolio overview dashboard page
