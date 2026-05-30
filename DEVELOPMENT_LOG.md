@@ -10,3 +10,4 @@ Starting tracking of project history...
 - 2026-05-29T14:29:32: feat: implement landing page layout and styling
 - 2026-05-29T19:49:17: feat: design glassmorphism theme and custom tailwind styles
 - 2026-05-30T12:30:49: feat: add offline mock fallbacks for client-side queries
+- 2026-05-30T13:31:01: feat: integrate startup card overview grid with active state indicators
