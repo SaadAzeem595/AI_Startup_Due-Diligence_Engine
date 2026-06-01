@@ -22,3 +22,4 @@ Starting tracking of project history...
 - 2026-06-01T09:20:39: refactor: simplify CSS definitions for glassmorphic elements
 - 2026-06-01T13:07:17: refactor: clean up backend routes and CORS permissions
 - 2026-06-01T16:51:02: fix: clerk authentication validation error mapping
+- 2026-06-01T19:35:54: fix: backend api models relationship mapping
