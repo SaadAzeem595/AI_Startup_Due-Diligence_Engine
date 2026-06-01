@@ -19,3 +19,4 @@ Starting tracking of project history...
 - 2026-05-31T16:14:59: feat: build SWOT analysis and competitor matrix grid component
 - 2026-05-31T21:22:13: feat: design timeline audit visualizer cards for pitch transcripts
 - 2026-05-31T21:38:24: feat: add investment decision matrix and scoring visualizer
+- 2026-06-01T09:20:39: refactor: simplify CSS definitions for glassmorphic elements
