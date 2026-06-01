@@ -21,3 +21,4 @@ Starting tracking of project history...
 - 2026-05-31T21:38:24: feat: add investment decision matrix and scoring visualizer
 - 2026-06-01T09:20:39: refactor: simplify CSS definitions for glassmorphic elements
 - 2026-06-01T13:07:17: refactor: clean up backend routes and CORS permissions
+- 2026-06-01T16:51:02: fix: clerk authentication validation error mapping
