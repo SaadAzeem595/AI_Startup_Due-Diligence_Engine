@@ -29,3 +29,4 @@ Starting tracking of project history...
 - 2026-06-02T14:05:32: docs: update readme with setup instructions and folder hierarchy
 - 2026-06-02T14:40:19: feat: implement core submodule part 28
 - 2026-06-02T14:59:50: perf: optimize document chunking latency in RAG pipeline
+- 2026-06-02T19:20:51: fix: gemini-1.5-flash models listing authentication parameters
