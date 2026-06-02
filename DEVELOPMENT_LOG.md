@@ -24,3 +24,4 @@ Starting tracking of project history...
 - 2026-06-01T16:51:02: fix: clerk authentication validation error mapping
 - 2026-06-01T19:35:54: fix: backend api models relationship mapping
 - 2026-06-01T19:55:42: feat: implement local database schema migration system
+- 2026-06-02T10:20:10: feat: add header click refresh handler for app layout
