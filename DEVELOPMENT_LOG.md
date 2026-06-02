@@ -27,3 +27,4 @@ Starting tracking of project history...
 - 2026-06-02T10:20:10: feat: add header click refresh handler for app layout
 - 2026-06-02T11:29:59: test: add diagnostics verify script for api credentials
 - 2026-06-02T14:05:32: docs: update readme with setup instructions and folder hierarchy
+- 2026-06-02T14:40:19: feat: implement core submodule part 28
