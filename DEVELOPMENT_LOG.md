@@ -25,3 +25,4 @@ Starting tracking of project history...
 - 2026-06-01T19:35:54: fix: backend api models relationship mapping
 - 2026-06-01T19:55:42: feat: implement local database schema migration system
 - 2026-06-02T10:20:10: feat: add header click refresh handler for app layout
+- 2026-06-02T11:29:59: test: add diagnostics verify script for api credentials
