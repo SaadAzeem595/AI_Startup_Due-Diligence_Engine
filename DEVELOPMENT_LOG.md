@@ -53,3 +53,4 @@ Starting tracking of project history...
 - 2026-06-07T21:53:00: docs: update development notes [revision 47]
 - 2026-06-08T11:04:46: perf: reduce next.js initial bundle size [revision 51]
 - 2026-06-08T11:54:32: perf: reduce next.js initial bundle size [revision 53]
+- 2026-06-08T11:59:55: style: align scrollbars and dashboard grid layouts [revision 54]
