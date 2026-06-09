@@ -59,3 +59,4 @@ Starting tracking of project history...
 - 2026-06-09T11:57:20: test: increase test coverage for orchestrator state machine [revision 55]
 - 2026-06-09T13:48:25: docs: document multi-agent scraping logic and heuristics [revision 58]
 - 2026-06-09T15:00:49: perf: reduce next.js initial bundle size [revision 57]
+- 2026-06-09T20:05:38: style: align scrollbars and dashboard grid layouts [revision 56]
