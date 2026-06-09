@@ -57,3 +57,4 @@ Starting tracking of project history...
 - 2026-06-08T21:26:05: style: minor layout padding and border polish [revision 50]
 - 2026-06-08T21:47:12: style: minor layout padding and border polish [revision 52]
 - 2026-06-09T11:57:20: test: increase test coverage for orchestrator state machine [revision 55]
+- 2026-06-09T13:48:25: docs: document multi-agent scraping logic and heuristics [revision 58]
