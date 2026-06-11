@@ -67,3 +67,4 @@ Starting tracking of project history...
 - 2026-06-10T14:33:33: refactor: optimize response payload serialization [revision 63]
 - 2026-06-10T18:34:24: refactor: optimize response payload serialization [revision 60]
 - 2026-06-11T09:58:40: style: minor layout padding and border polish [revision 65]
+- 2026-06-11T12:53:57: docs: document multi-agent scraping logic and heuristics [revision 66]
