@@ -72,3 +72,4 @@ Starting tracking of project history...
 - 2026-06-12T11:06:44: chore: update dev dependencies [revision 71]
 - 2026-06-12T11:23:51: fix: handle minor network timeout warnings [revision 69]
 - 2026-06-12T12:29:04: test: increase test coverage for orchestrator state machine [revision 68]
+- 2026-06-12T17:21:54: docs: document multi-agent scraping logic and heuristics [revision 70]
