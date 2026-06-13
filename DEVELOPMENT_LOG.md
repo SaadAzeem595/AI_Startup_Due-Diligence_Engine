@@ -73,3 +73,4 @@ Starting tracking of project history...
 - 2026-06-12T11:23:51: fix: handle minor network timeout warnings [revision 69]
 - 2026-06-12T12:29:04: test: increase test coverage for orchestrator state machine [revision 68]
 - 2026-06-12T17:21:54: docs: document multi-agent scraping logic and heuristics [revision 70]
+- 2026-06-13T09:41:16: perf: reduce next.js initial bundle size [revision 74]
