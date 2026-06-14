@@ -77,3 +77,4 @@ Starting tracking of project history...
 - 2026-06-13T10:49:19: chore: update dev dependencies [revision 73]
 - 2026-06-13T11:33:04: docs: update development notes [revision 72]
 - 2026-06-13T20:14:28: test: increase test coverage for orchestrator state machine [revision 75]
+- 2026-06-14T15:01:52: docs: document multi-agent scraping logic and heuristics [revision 77]
