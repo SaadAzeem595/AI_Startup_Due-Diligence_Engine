@@ -80,3 +80,4 @@ Starting tracking of project history...
 - 2026-06-14T15:01:52: docs: document multi-agent scraping logic and heuristics [revision 77]
 - 2026-06-14T15:17:58: refactor: optimize response payload serialization [revision 76]
 - 2026-06-14T21:23:48: docs: update development notes [revision 78]
+- 2026-06-15T15:24:06: style: align scrollbars and dashboard grid layouts [revision 80]
