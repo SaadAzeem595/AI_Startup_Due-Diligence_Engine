@@ -86,3 +86,4 @@ Starting tracking of project history...
 - 2026-06-16T13:08:02: refactor: optimize response payload serialization [revision 87]
 - 2026-06-16T13:16:05: chore: update dev dependencies [revision 84]
 - 2026-06-16T13:27:19: chore: update dev dependencies [revision 83]
+- 2026-06-16T14:36:01: docs: document multi-agent scraping logic and heuristics [revision 86]
