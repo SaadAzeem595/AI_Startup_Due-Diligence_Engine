@@ -89,3 +89,4 @@ Starting tracking of project history...
 - 2026-06-16T14:36:01: docs: document multi-agent scraping logic and heuristics [revision 86]
 - 2026-06-16T14:42:20: docs: document multi-agent scraping logic and heuristics [revision 82]
 - 2026-06-16T21:26:59: docs: update development notes [revision 85]
+- 2026-06-17T14:21:32: docs: update development notes [revision 89]
