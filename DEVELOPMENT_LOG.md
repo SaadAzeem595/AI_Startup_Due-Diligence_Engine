@@ -95,3 +95,4 @@ Starting tracking of project history...
 - 2026-06-17T19:41:03: fix: handle minor network timeout warnings [revision 91]
 - 2026-06-17T21:32:47: docs: document multi-agent scraping logic and heuristics [revision 92]
 - 2026-06-17T21:49:25: chore: update dev dependencies [revision 88]
+- 2026-06-18T09:10:42: style: align scrollbars and dashboard grid layouts [revision 94]
