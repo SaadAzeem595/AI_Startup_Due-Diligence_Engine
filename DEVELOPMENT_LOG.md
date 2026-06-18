@@ -96,3 +96,4 @@ Starting tracking of project history...
 - 2026-06-17T21:32:47: docs: document multi-agent scraping logic and heuristics [revision 92]
 - 2026-06-17T21:49:25: chore: update dev dependencies [revision 88]
 - 2026-06-18T09:10:42: style: align scrollbars and dashboard grid layouts [revision 94]
+- 2026-06-18T09:32:12: style: minor layout padding and border polish [revision 98]
