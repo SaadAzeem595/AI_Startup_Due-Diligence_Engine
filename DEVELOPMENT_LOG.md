@@ -99,3 +99,4 @@ Starting tracking of project history...
 - 2026-06-18T09:32:12: style: minor layout padding and border polish [revision 98]
 - 2026-06-18T10:49:20: fix: handle minor network timeout warnings [revision 95]
 - 2026-06-18T16:22:10: fix: handle minor network timeout warnings [revision 96]
+- 2026-06-18T17:22:11: perf: reduce next.js initial bundle size [revision 97]
