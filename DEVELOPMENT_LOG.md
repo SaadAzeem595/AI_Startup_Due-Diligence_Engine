@@ -106,3 +106,4 @@ Starting tracking of project history...
 - 2026-06-19T13:55:40: refactor: optimize response payload serialization [revision 101]
 - 2026-06-19T18:44:29: fix: handle minor network timeout warnings [revision 103]
 - 2026-06-19T20:06:46: docs: update development notes [revision 104]
+- 2026-06-20T10:16:19: docs: document multi-agent scraping logic and heuristics [revision 105]
