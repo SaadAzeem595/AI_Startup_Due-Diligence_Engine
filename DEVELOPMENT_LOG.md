@@ -115,3 +115,4 @@ Starting tracking of project history...
 - 2026-06-21T14:08:44: refactor: optimize response payload serialization [revision 110]
 - 2026-06-21T14:51:58: docs: update development notes [revision 109]
 - 2026-06-22T15:25:11: style: minor layout padding and border polish [revision 114]
+- 2026-06-22T18:27:24: docs: document multi-agent scraping logic and heuristics [revision 113]
