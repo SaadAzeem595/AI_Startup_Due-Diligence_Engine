@@ -117,3 +117,4 @@ Starting tracking of project history...
 - 2026-06-22T15:25:11: style: minor layout padding and border polish [revision 114]
 - 2026-06-22T18:27:24: docs: document multi-agent scraping logic and heuristics [revision 113]
 - 2026-06-22T18:55:49: style: minor layout padding and border polish [revision 115]
+- 2026-06-23T09:50:20: style: align scrollbars and dashboard grid layouts [revision 116]
