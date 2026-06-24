@@ -124,3 +124,4 @@ Starting tracking of project history...
 - 2026-06-23T20:00:28: fix: handle minor network timeout warnings [revision 118]
 - 2026-06-24T15:32:54: style: minor layout padding and border polish [revision 123]
 - 2026-06-24T17:05:05: docs: document multi-agent scraping logic and heuristics [revision 122]
+- 2026-06-24T19:33:13: style: align scrollbars and dashboard grid layouts [revision 121]
