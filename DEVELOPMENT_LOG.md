@@ -127,3 +127,4 @@ Starting tracking of project history...
 - 2026-06-24T19:33:13: style: align scrollbars and dashboard grid layouts [revision 121]
 - 2026-06-25T16:41:55: refactor: optimize response payload serialization [revision 124]
 - 2026-06-25T19:53:13: docs: document multi-agent scraping logic and heuristics [revision 125]
+- 2026-06-25T20:03:51: perf: reduce next.js initial bundle size [revision 126]
