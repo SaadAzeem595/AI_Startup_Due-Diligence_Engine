@@ -130,3 +130,4 @@ Starting tracking of project history...
 - 2026-06-25T20:03:51: perf: reduce next.js initial bundle size [revision 126]
 - 2026-06-26T11:52:49: fix: handle minor network timeout warnings [revision 128]
 - 2026-06-26T14:15:26: docs: document multi-agent scraping logic and heuristics [revision 127]
+- 2026-06-26T16:54:24: perf: reduce next.js initial bundle size [revision 129]
