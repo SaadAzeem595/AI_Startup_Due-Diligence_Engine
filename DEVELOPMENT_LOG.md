@@ -133,3 +133,4 @@ Starting tracking of project history...
 - 2026-06-26T16:54:24: perf: reduce next.js initial bundle size [revision 129]
 - 2026-06-26T19:51:52: perf: reduce next.js initial bundle size [revision 130]
 - 2026-06-27T10:12:51: test: increase test coverage for orchestrator state machine [revision 132]
+- 2026-06-27T10:50:44: style: align scrollbars and dashboard grid layouts [revision 135]
