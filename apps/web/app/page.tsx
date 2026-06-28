@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowRight, Bot, Shield, Cpu, Activity, TrendingUp, CheckCircle, Video, FileText } from "lucide-react";
+import { UserButton, useAuth } from "@clerk/nextjs";
 
 export default function LandingPage() {
   const [hoveredFeature, setHoveredFeature] = useState<number | null>(null);
+  const { isSignedIn, isLoaded } = useAuth();
 
   const features = [
     {
@@ -57,12 +59,32 @@ export default function LandingPage() {
           </span>
         </div>
         <div className="flex items-center space-x-4">
-          <Link 
-            href="/dashboard" 
-            className="px-5 py-2.5 rounded-xl text-sm font-medium bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white shadow-lg shadow-violet-500/10 hover:shadow-violet-500/20 border border-violet-400/20 transition-all duration-300"
-          >
-            Launch Platform
-          </Link>
+          {isLoaded && isSignedIn ? (
+            <>
+              <Link 
+                href="/dashboard" 
+                className="px-5 py-2 text-sm font-medium text-slate-300 hover:text-white transition-all bg-white/5 border border-white/10 rounded-xl hover:bg-white/10"
+              >
+                Dashboard
+              </Link>
+              <UserButton afterSignOutUrl="/" />
+            </>
+          ) : (
+            <>
+              <Link 
+                href="/sign-in" 
+                className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white transition-all"
+              >
+                Sign In
+              </Link>
+              <Link 
+                href="/sign-up" 
+                className="px-5 py-2.5 rounded-xl text-sm font-medium bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white shadow-lg shadow-violet-500/10 hover:shadow-violet-500/20 border border-violet-400/20 transition-all duration-300"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
       </header>
 
@@ -90,13 +112,23 @@ export default function LandingPage() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <Link 
-              href="/dashboard" 
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-8 py-4 rounded-xl font-medium bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-600 hover:opacity-95 text-white shadow-xl shadow-indigo-600/20 transition-all duration-300 hover:scale-[1.02]"
-            >
-              <span>Analyze Startup</span>
-              <ArrowRight className="w-5 h-5" />
-            </Link>
+            {isLoaded && isSignedIn ? (
+              <Link 
+                href="/dashboard" 
+                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-8 py-4 rounded-xl font-medium bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-600 hover:opacity-95 text-white shadow-xl shadow-indigo-600/20 transition-all duration-300 hover:scale-[1.02]"
+              >
+                <span>Go to Dashboard</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            ) : (
+              <Link 
+                href="/sign-up" 
+                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-8 py-4 rounded-xl font-medium bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-600 hover:opacity-95 text-white shadow-xl shadow-indigo-600/20 transition-all duration-300 hover:scale-[1.02]"
+              >
+                <span>Get Started (Free)</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            )}
             <Link
               href="#pricing"
               className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl font-medium border border-white/10 bg-white/5 hover:bg-white/10 text-white transition-all duration-300"

@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-import { PlusCircle, Search, Calendar, Globe, AlertCircle, RefreshCw, BadgeAlert, BadgeCheck } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { PlusCircle, Search, Calendar, Globe, AlertCircle, RefreshCw, BadgeAlert, BadgeCheck, MoreVertical, Trash2 } from "lucide-react";
 
 interface Project {
   id: string;
@@ -18,6 +19,9 @@ export default function DashboardOverview() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [isOffline, setIsOffline] = useState(false);
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   // Mock projects in case the API is offline
   const mockProjects: Project[] = [
@@ -64,8 +68,37 @@ export default function DashboardOverview() {
     }
   };
 
+  const handleDelete = async (projectId: string) => {
+    setOpenMenuId(null);
+    if (isOffline) {
+      setProjects(prev => prev.filter(p => p.id !== projectId));
+      return;
+    }
+    try {
+      const res = await fetch(`http://127.0.0.1:8000/api/v1/projects/${projectId}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        setProjects(prev => prev.filter(p => p.id !== projectId));
+      }
+    } catch (e) {
+      console.error("Failed to delete project", e);
+    }
+  };
+
   useEffect(() => {
     fetchProjects();
+  }, []);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setOpenMenuId(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const filteredProjects = projects.filter(p => 
@@ -142,25 +175,54 @@ export default function DashboardOverview() {
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project) => (
-            <Link
+            <div
               key={project.id}
-              href={`/dashboard/projects/${project.id}`}
-              className="glass p-6 rounded-2xl border-white/5 glass-hover flex flex-col justify-between space-y-6"
+              className="glass p-6 rounded-2xl border-white/5 glass-hover flex flex-col justify-between space-y-6 relative cursor-pointer"
+              onClick={() => router.push(`/dashboard/projects/${project.id}`)}
             >
               <div className="space-y-4">
                 <div className="flex justify-between items-start">
                   <h3 className="font-extrabold text-lg text-white leading-tight">{project.name}</h3>
-                  <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                    project.status === "completed" 
-                      ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" 
-                      : project.status === "analyzing"
-                      ? "bg-violet-500/10 text-violet-400 border border-violet-500/20 animate-pulse"
-                      : project.status === "failed"
-                      ? "bg-rose-500/10 text-rose-400 border border-rose-500/20"
-                      : "bg-slate-500/10 text-slate-300 border border-slate-500/20"
-                  }`}>
-                    {project.status}
-                  </span>
+                  <div className="flex items-center space-x-2">
+                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                      project.status === "completed" 
+                        ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" 
+                        : project.status === "analyzing"
+                        ? "bg-violet-500/10 text-violet-400 border border-violet-500/20 animate-pulse"
+                        : project.status === "failed"
+                        ? "bg-rose-500/10 text-rose-400 border border-rose-500/20"
+                        : "bg-slate-500/10 text-slate-300 border border-slate-500/20"
+                    }`}>
+                      {project.status}
+                    </span>
+                    {/* 3-dot menu */}
+                    <div className="relative" ref={openMenuId === project.id ? menuRef : null}>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setOpenMenuId(openMenuId === project.id ? null : project.id);
+                        }}
+                        className="p-1.5 rounded-lg hover:bg-white/10 text-slate-400 hover:text-slate-200 transition-all"
+                        title="Options"
+                      >
+                        <MoreVertical className="w-4 h-4" />
+                      </button>
+                      {openMenuId === project.id && (
+                        <div className="absolute right-0 top-full mt-1 w-40 rounded-xl bg-slate-800 border border-white/10 shadow-2xl shadow-black/40 z-50 overflow-hidden animate-fade-in">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDelete(project.id);
+                            }}
+                            className="w-full flex items-center space-x-2.5 px-4 py-2.5 text-sm text-rose-400 hover:bg-rose-500/10 transition-all"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                            <span>Delete</span>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
 
                 <p className="text-sm text-slate-400 line-clamp-3 leading-relaxed">
@@ -178,7 +240,7 @@ export default function DashboardOverview() {
                   <span>{new Date(project.created_at).toLocaleDateString()}</span>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       )}

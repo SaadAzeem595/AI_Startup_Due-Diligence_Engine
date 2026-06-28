@@ -12,6 +12,7 @@ from apps.api.database import engine, Base, get_db
 from apps.api.models import Project, Document, Report, AnalysisStep, AIInteraction
 from apps.api.agents.orchestrator import run_due_diligence_orchestration
 from apps.api.services.rag import RAGService
+from apps.api.auth import get_current_user
 
 # Create database tables automatically
 Base.metadata.create_all(bind=engine)
@@ -61,7 +62,7 @@ def read_root():
     return {"message": "AI Startup Due Diligence API is running.", "mode": "Mock" if settings.MOCK_MODE else "Live"}
 
 @app.post("/api/v1/projects")
-def create_project(project_in: ProjectCreate, db: Session = Depends(get_db)):
+def create_project(project_in: ProjectCreate, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
     project = Project(
         name=project_in.name,
         website_url=project_in.website_url,
@@ -81,7 +82,7 @@ def create_project(project_in: ProjectCreate, db: Session = Depends(get_db)):
     }
 
 @app.get("/api/v1/projects")
-def list_projects(db: Session = Depends(get_db)):
+def list_projects(db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
     projects = db.query(Project).order_by(Project.created_at.desc()).all()
     return [{
         "id": p.id,
@@ -93,7 +94,7 @@ def list_projects(db: Session = Depends(get_db)):
     } for p in projects]
 
 @app.get("/api/v1/projects/{project_id}")
-def get_project(project_id: str, db: Session = Depends(get_db)):
+def get_project(project_id: str, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
     project = db.query(Project).filter(Project.id == project_id).first()
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
@@ -117,12 +118,31 @@ def get_project(project_id: str, db: Session = Depends(get_db)):
         "has_report": has_report
     }
 
+@app.delete("/api/v1/projects/{project_id}")
+def delete_project(project_id: str, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
+    project = db.query(Project).filter(Project.id == project_id).first()
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+    
+    # Clean up associated local files from the filesystem
+    for doc in project.documents:
+        if doc.file_path and os.path.exists(doc.file_path):
+            try:
+                os.remove(doc.file_path)
+            except Exception as e:
+                print(f"Error removing file {doc.file_path}: {e}")
+                
+    db.delete(project)
+    db.commit()
+    return {"status": "deleted", "project_id": project_id}
+
 @app.post("/api/v1/projects/{project_id}/documents")
 async def upload_document(
     project_id: str,
     file_type: str, # pdf, business_plan, financial, pitch_transcript
     file: UploadFile = File(...),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: str = Depends(get_current_user)
 ):
     project = db.query(Project).filter(Project.id == project_id).first()
     if not project:
@@ -175,7 +195,7 @@ async def upload_document(
     }
 
 @app.post("/api/v1/projects/{project_id}/analysis/start")
-def start_analysis(project_id: str, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
+def start_analysis(project_id: str, background_tasks: BackgroundTasks, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
     project = db.query(Project).filter(Project.id == project_id).first()
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")

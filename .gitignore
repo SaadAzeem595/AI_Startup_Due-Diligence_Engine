@@ -30,6 +30,11 @@ env/
 .env.local
 .env.*.local
 
+# Logs and user uploads
+logs/
+apps/api/uploads/
+
 # OS Files
 .DS_Store
 Thumbs.db
+
