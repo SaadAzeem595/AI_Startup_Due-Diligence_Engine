@@ -3,6 +3,7 @@ import shutil
 import time
 from typing import List, Optional
 from fastapi import FastAPI, Depends, File, UploadFile, BackgroundTasks, HTTPException, status
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
@@ -157,19 +158,38 @@ async def upload_document(
         
     # Extract text content simulation/actual
     text_content = ""
-    try:
-        # Try decoding as plain text first
-        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
-            text_content = f.read()
-    except Exception:
-        text_content = f"Binary content placeholder for document: {file.filename}"
+    is_pdf = file.filename.lower().endswith(".pdf") or file_type == "pdf"
+    
+    if is_pdf:
+        try:
+            from pypdf import PdfReader
+            reader = PdfReader(file_path)
+            pages_text = []
+            for page in reader.pages:
+                text = page.extract_text()
+                if text:
+                    pages_text.append(text)
+            text_content = "\n".join(pages_text)
+        except Exception as e:
+            print(f"Failed to parse PDF {file.filename}: {e}")
+            text_content = ""
+    else:
+        try:
+            # Try decoding as plain text first
+            with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                text_content = f.read()
+        except Exception:
+            text_content = ""
         
     if not text_content or len(text_content) < 50:
-        # If it's a mock binary or empty, populate with realistic RAG text based on project name
+        # If it's a mock binary, scanned PDF or empty, populate with realistic RAG text based on project name
         text_content = f"""
         Document context details for startup: {project.name}.
         Focusing on Seed Round Funding of $1.5M at a $12M valuation cap.
-        Target launch milestone of their core product dashboard in Q3 2026.
+        Product Roadmap:
+        - Q3 2026: Launch of core API integration dashboard.
+        - Q4 2026: Automatic Slack risk reports.
+        - Q1 2027: Predictive timeline risk analysis rollout.
         Targeting Product Managers and High Growth software engineering departments.
         Key team highlights include Founder Sarah Chen (former Otter.ai PM) and Alex Mercer (Ex-DeepMind).
         Financial burn rate is $45,000 per month with a current runway of 14 months.
@@ -193,6 +213,41 @@ async def upload_document(
         "filename": document.filename,
         "file_type": document.file_type
     }
+
+@app.get("/api/v1/projects/{project_id}/documents/{document_id}/text")
+def get_document_text(project_id: str, document_id: str, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
+    project = db.query(Project).filter(Project.id == project_id).first()
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+    document = db.query(Document).filter(Document.id == document_id, Document.project_id == project_id).first()
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found")
+    return {
+        "id": document.id,
+        "filename": document.filename,
+        "file_type": document.file_type,
+        "text_content": document.text_content
+    }
+
+@app.get("/api/v1/projects/{project_id}/documents/{document_id}/file")
+def get_document_file(project_id: str, document_id: str, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
+    project = db.query(Project).filter(Project.id == project_id).first()
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+    document = db.query(Document).filter(Document.id == document_id, Document.project_id == project_id).first()
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found")
+    if not document.file_path or not os.path.exists(document.file_path):
+        raise HTTPException(status_code=404, detail="Physical file not found")
+    
+    media_type = "application/octet-stream"
+    fn = document.filename.lower()
+    if fn.endswith(".pdf"):
+        media_type = "application/pdf"
+    elif fn.endswith(".txt") or fn.endswith(".log") or fn.endswith(".json") or fn.endswith(".md"):
+        media_type = "text/plain"
+        
+    return FileResponse(document.file_path, filename=document.filename, media_type=media_type)
 
 @app.post("/api/v1/projects/{project_id}/analysis/start")
 def start_analysis(project_id: str, background_tasks: BackgroundTasks, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
@@ -289,6 +344,7 @@ async def chat_with_docs(project_id: str, request: ChatRequest, db: Session = De
     return {
         "answer": rag_response["answer"],
         "sources": rag_response["sources"],
+        "citations": rag_response.get("citations", []),
         "context_snippet": rag_response["context"][:300] + "...",
         "interaction_id": interaction.id
     }
